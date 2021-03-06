@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from "../components/layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import { sanitizeHtml } from "../utilities";
+//import { sanitizeHtml } from "../utilities";
 
 const SpaceTemplate = ({ data }) => {
 
@@ -13,7 +13,7 @@ const SpaceTemplate = ({ data }) => {
       </h1>
       <div className="container">
         <GatsbyImage image={getImage(data.space.relationships.field_image.localFile)} alt={data.space.title} />
-        <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.space.body.processed)}} />
+        <div dangerouslySetInnerHTML={{ __html: data.space.body.processed}} />
       </div>
     </Layout>
   )

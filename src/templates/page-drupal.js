@@ -1,13 +1,13 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from "../components/layout";
-import { sanitizeHtml } from "../utilities";
+//import { sanitizeHtml } from "../utilities";
 
 const PageNodeTemplate = ({ data }) => {
 
   return (
     <Layout>
-      <div className="container" dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.page.body.processed)}} />
+      <div className="container" dangerouslySetInnerHTML={{ __html: data.page.body.processed}} />
     </Layout>
   )
 };

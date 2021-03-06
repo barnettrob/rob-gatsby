@@ -1,13 +1,13 @@
 import React from "react"
 import { graphql } from "gatsby";
 import Layout from "../components/layout";
-import { sanitizeHtml } from "../utilities";
+//import { sanitizeHtml } from "../utilities";
 
 const Home = ({data }) => (
   <Layout>
          {
       data.page.body !== null ?
-      <div className="container" dangerouslySetInnerHTML={{ __html: sanitizeHtml(data.page.body.processed)}} />
+      <div className="container" dangerouslySetInnerHTML={{ __html: data.page.body.processed}} />
       :
       <div className="container">
         <div className="pt-5 pb-5 text-center">

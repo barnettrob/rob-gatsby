@@ -2,6 +2,7 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 import Layout from "../components/layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import PlaceholderSvg from '../images/placeholder.svg';
 import Pagination from "../components/pagination";
 
 class SpaceListing extends React.Component {
@@ -21,7 +22,7 @@ class SpaceListing extends React.Component {
                 <div className="picture">
                   {
                     node.relationships.field_image.localFile === null ?
-                    ''
+                    <PlaceholderSvg />
                     :
                     <GatsbyImage image={getImage(node.relationships.field_image.localFile)} alt={node.title} />
                   }

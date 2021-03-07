@@ -1,6 +1,5 @@
 import React from "react";
-import {Navbar} from 'react-bootstrap';
-import {Link} from "gatsby";
+import { Nav, Navbar, NavLink } from 'react-bootstrap';
 
 const menu = {
   0: {
@@ -8,34 +7,35 @@ const menu = {
     title: 'Home'
   },
   1: {
-    link: '/space',
-    title: 'Space',
+    link: '/climbing',
+    title: 'Climbing',
   },
   2: {
-    link: '/climbing',
-    title: 'Climbing'
-  },
-  3: {
     link: '/music',
     title: 'Music'
+  },
+  3: {
+    link: '/space',
+    title: 'Space'
   }
 }
 
 const Header = () => (
-  <Navbar>
-    <div className="container">
-      <ul className="d-flex list-unstyled">
-        {Object.keys(menu).map(function(key) {
-          return <li className="pl-3 pr-5" key={menu[key].link}>
-          <Link
-            to={menu[key].link}
-            >
+  <Navbar expand="lg" bg="light" variant="light">
+    <Navbar.Brand href="#home">Rob's Space</Navbar.Brand>
+    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    <Navbar.Collapse id="responsive-navbar-nav">
+      <Nav className="mr-auto container">
+        {Object.keys(menu).map(key => (
+          <NavLink
+            key={menu[key].link}
+            href={menu[key].link}
+          >
             {menu[key].title}
-          </Link>
-        </li>
-        })}           
-      </ul>
-    </div>
+          </NavLink>
+        ))}         
+      </Nav>
+    </Navbar.Collapse>
   </Navbar>
 )
 

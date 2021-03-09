@@ -6,6 +6,30 @@ import PlaceholderSvg from '../images/placeholder.svg';
 import Pagination from "../components/pagination";
 
 class ClimbingListing extends React.Component {
+  componentDidMount() {
+    const person = {
+      'email': 'fscottfitzgerald@gatsbytesting.com',
+      'firstName': 'FScott',
+      'lastName': 'Fitzgerald',
+      'phone': '1112223333',
+      'Company': 'EDB Test',
+      'Country': 'US',
+      'State': 'FL',
+      'Industry': 'Enterprise',
+      'Campaign1': '123412346789'
+    }
+
+    fetch('/.netlify/functions/marketo', {
+      method: "POST",
+      body: JSON.stringify({
+        text: person
+      })
+    }).then(response => {
+      console.log("response", response);
+      //return response.json()
+    })
+  }
+
   render() {
     const urlPath = 'climbing'
     const { data } = this.props

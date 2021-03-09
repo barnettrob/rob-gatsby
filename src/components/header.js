@@ -22,7 +22,7 @@ const menu = {
 
 const Header = () => (
   <Navbar expand="lg" bg="light" variant="light">
-    <Navbar.Brand href="#home">Rob's Space</Navbar.Brand>
+    <Navbar.Brand href="/">Rob Barnett</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="mr-auto container">

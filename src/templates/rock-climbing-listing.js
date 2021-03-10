@@ -8,22 +8,26 @@ import Pagination from "../components/pagination";
 class ClimbingListing extends React.Component {
   componentDidMount() {
     const person = {
-      'email': 'fscottfitzgerald@gatsbytesting.com',
-      'firstName': 'FScott',
-      'lastName': 'Fitzgerald',
-      'phone': '1112223333',
-      'Company': 'EDB Test',
-      'Country': 'US',
-      'State': 'FL',
-      'Industry': 'Enterprise',
-      'Campaign1': '123412346789'
+      "programName": "Web Profile Registration",
+      "reason": "Web Profile Registration",
+      "source": "Web",
+      "lookupField": "email",
+      "input": [{
+        "eDBUsername": "nickcarraway20210310",
+        "email": "nickcarraway20210310@gatsbytesting.com",
+        "Company": "EDB Test",
+        "Consent_Notes__c": "Ver. May 25, 2018",
+        "FirstName": "Nick",
+        "LastName": "Carraway",
+        "Country": "JM",
+        "Industry": "Enterprise",
+        "Phone": "334-535-5050"
+      }]
     }
 
     fetch('/.netlify/functions/marketo', {
       method: "POST",
-      body: JSON.stringify({
-        text: person
-      })
+      body: JSON.stringify(person)
     }).then(response => {
       console.log("response", response);
       //return response.json()

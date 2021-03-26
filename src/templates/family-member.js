@@ -2,18 +2,21 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from "../components/layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-//import { sanitizeHtml } from "../utilities";
 
-const ClimbingTemplate = ({ data }) => {
+const FamilyMemberTemplate = ({ data }) => {
 
   return (
     <Layout>
-      <h1 className="container">
-        {data.space.title}
+      <h1 className="container mt-5">
+        {data.family.title}
       </h1>
       <div className="container">
-        <GatsbyImage image={getImage(data.space.relationships.field_image.localFile)} alt={data.space.title} />
-        <div dangerouslySetInnerHTML={{ __html: data.space.body.processed}} />
+        <GatsbyImage image={getImage(data.family.relationships.field_member_picture.localFile)} alt={data.family.title} />
+        {data.family.body !== null ?
+        <div dangerouslySetInnerHTML={{ __html: data.family.body.processed}} />
+        :
+        ''
+        }
       </div>
     </Layout>
   )
@@ -21,7 +24,7 @@ const ClimbingTemplate = ({ data }) => {
 
 export const query = graphql`
   query ($alias: String!) {
-    space: nodeRockClimbing(path: {alias: {eq: $alias}}, status: {eq: true}) {
+    family: nodeFamilyMember(path: {alias: {eq: $alias}}, status: {eq: true}) {
       title
       body {
         processed
@@ -31,10 +34,11 @@ export const query = graphql`
       }
       id
       relationships {
-        field_image {
+        field_member_picture {
           localFile {
             childImageSharp {
               gatsbyImageData(
+                height: 400
                 placeholder: BLURRED
                 formats: [AUTO, WEBP, AVIF]
               )
@@ -46,4 +50,4 @@ export const query = graphql`
   }
 `;
 
-export default ClimbingTemplate;
+export default FamilyMemberTemplate;

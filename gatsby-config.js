@@ -26,8 +26,12 @@ module.exports = {
     {
       resolve: `gatsby-source-drupal`,
       options: {
-        baseUrl: `https://dev-rob-barnett.pantheonsite.io/`,
-        apiBase: `api`,
+        baseUrl: `https://dev-kleinberg-family.pantheonsite.io/`,
+        apiBase: `5ZW3mQML25Cg/api`,
+        basicAuth: {
+          username: process.env.AUTH_USER,
+          password: process.env.AUTH_PASS,
+        },
       },
     },
   ],

@@ -3,7 +3,7 @@ exports.handler = async function(event, context, callback) {
   const fetch = require("node-fetch");
   const marketoHost = process.env.MARKETO_HOST;
 
-  console.log("event", event);
+  console.log("event", event.body);
   let token
   try {
     token = await fetch(`${marketoHost}/identity/oauth/token`, {

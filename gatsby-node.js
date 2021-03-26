@@ -10,27 +10,12 @@ exports.createPages = async ({ actions, graphql }) => {
   const {createPage} = actions;
 
   const pageTemplate = path.resolve(`src/templates/page-drupal.js`)
-  const spaceTemplate = path.resolve(`src/templates/space.js`)
-  const spaceListingTemplate = path.resolve(`src/templates/space-listing.js`)
-  const musicTemplate = path.resolve(`src/templates/music.js`)
-  const musicListingTemplate = path.resolve(`src/templates/music-listing.js`)
-  const rockClimbingTemplate = path.resolve(`src/templates/rock-climbing.js`)
-  const rockClimbingListingTemplate = path.resolve(`src/templates/rock-climbing-listing.js`)
+  const familyMemberTemplate = path.resolve(`src/templates/family-member.js`)
+  const familyMemberListingTemplate = path.resolve(`src/templates/family-member-listing.js`)
 
   // Query for recipe nodes to use in creating pages.
   return graphql(`
     {
-      space_pages: allNodeSpaceExploration(filter: {status: {eq: true}}) {
-        edges {
-          node {
-            title
-            path {
-              alias
-            }
-            drupal_internal__nid
-          }
-        }
-      }
       page: allNodePage(filter: {status: {eq: true}}) {
         edges {
           node {
@@ -42,7 +27,7 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
-      music: allNodeMusic(filter: {status: {eq: true}}) {
+      family_member: allNodeFamilyMember(filter: {status: {eq: true}}) {
         edges {
           node {
             title
@@ -53,48 +38,9 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
-      climbing: allNodeRockClimbing(filter: {status: {eq: true}}) {
-        edges {
-          node {
-            title
-            path {
-              alias
-            }
-            drupal_internal__nid
-          }
-        }
-      }
-      space_list_pages: allNodeSpaceExploration(
+      family_list: allNodeFamilyMember(
         limit: 1000
-        sort: {fields: changed, order: DESC}
-      ) {
-        edges {
-          node {
-            title
-            path {
-              alias
-            }
-            drupal_id
-          }
-        }
-      }
-      music_list: allNodeMusic(
-        limit: 1000
-        sort: {fields: changed, order: DESC}
-      ) {
-        edges {
-          node {
-            title
-            path {
-              alias
-            }
-            drupal_id
-          }
-        }
-      }
-      climbing_list: allNodeRockClimbing(
-        limit: 1000
-        sort: {fields: changed, order: DESC}
+        sort: {fields: title, order: ASC}
       ) {
         edges {
           node {
@@ -122,80 +68,28 @@ exports.createPages = async ({ actions, graphql }) => {
         }
       })
     });    
-    // Create pages for each space page.
-    result.data.space_pages.edges.forEach(({ node }) => {
+    // Create pages for each family member page.
+    result.data.family_member.edges.forEach(({ node }) => {
       createPage({
         path: node.path.alias,
-        component: spaceTemplate,
+        component: familyMemberTemplate,
         context: {
           alias: node.path.alias != null ? node.path.alias : `/node/${node.drupal_internal__nid}`,
         }
       })
     });
-    // Create pages for each music page.
-    result.data.music.edges.forEach(({ node }) => {
+    // Create list pages for family members.
+    const familyPosts = result.data.family_list.edges
+    const familyPostsPerPage = 3
+    const familyNumPages = Math.ceil(familyPosts.length / familyPostsPerPage)
+    Array.from({ length: familyNumPages }).forEach((_, i) => {
       createPage({
-        path: node.path.alias,
-        component: musicTemplate,
+        path: i === 0 ? `/family` : `/family/${i + 1}`,
+        component: familyMemberListingTemplate,
         context: {
-          alias: node.path.alias != null ? node.path.alias : `/node/${node.drupal_internal__nid}`,
-        }
-      })
-    });
-    // Create pages for each climbing page.
-    result.data.climbing.edges.forEach(({ node }) => {
-      createPage({
-        path: node.path.alias,
-        component: rockClimbingTemplate,
-        context: {
-          alias: node.path.alias != null ? node.path.alias : `/node/${node.drupal_internal__nid}`,
-        }
-      })
-    });
-    // Create list pages for space
-    const spacePosts = result.data.space_list_pages.edges
-    const spacePostsPerPage = 10
-    const spaceNumPages = Math.ceil(spacePosts.length / spacePostsPerPage)
-    Array.from({ length: spaceNumPages }).forEach((_, i) => {
-      createPage({
-        path: i === 0 ? `/space` : `/space/${i + 1}`,
-        component: spaceListingTemplate,
-        context: {
-          limit: spacePostsPerPage,
-          skip: i * spacePostsPerPage,
-          spaceNumPages,
-          currentPage: i + 1,
-        }
-      })
-    });
-    // Create list pages for music
-    const musicPosts = result.data.music_list.edges
-    const musicPostsPerPage = 10
-    const musicNumPages = Math.ceil(musicPosts.length / musicPostsPerPage)
-    Array.from({ length: musicNumPages }).forEach((_, i) => {
-      createPage({
-        path: i === 0 ? `/music` : `/music/${i + 1}`,
-        component: musicListingTemplate,
-        context: {
-          limit: musicPostsPerPage,
-          skip: i * musicPostsPerPage,
-          musicNumPages,
-          currentPage: i + 1,
-        }
-      })
-    });
-    // Create list pages for rock climbing
-    const climbingPosts = result.data.climbing_list.edges
-    const climbingPostsPerPage = 10
-    const climbingNumPages = Math.ceil(climbingPosts.length / climbingPostsPerPage)
-    Array.from({ length: climbingNumPages }).forEach((_, i) => {
-      createPage({
-        path: i === 0 ? `/climbing` : `/climbing/${i + 1}`,
-        component: rockClimbingListingTemplate,
-        context: {
-          limit: climbingPostsPerPage,
-          skip: i * climbingPostsPerPage,
-          climbingNumPages,
+          limit: familyPostsPerPage,
+          skip: i * familyPostsPerPage,
+          familyNumPages,
           currentPage: i + 1,
         }
       })

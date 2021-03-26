@@ -1,42 +1,34 @@
 import React from "react";
-import { Nav, Navbar, NavLink } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavLink } from 'react-bootstrap';
 
 const menu = {
   0: {
-    link: '/',
-    title: 'Home'
-  },
-  1: {
-    link: '/climbing',
-    title: 'Climbing',
-  },
-  2: {
-    link: '/music',
-    title: 'Music'
-  },
-  3: {
-    link: '/space',
-    title: 'Space'
+    link: '/family',
+    title: 'Family Members',
   }
 }
 
 const Header = () => (
-  <Navbar expand="lg" bg="light" variant="light">
-    <Navbar.Brand href="/">Rob Barnett</Navbar.Brand>
-    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-    <Navbar.Collapse id="responsive-navbar-nav">
-      <Nav className="mr-auto container">
-        {Object.keys(menu).map(key => (
-          <NavLink
-            key={menu[key].link}
-            href={menu[key].link}
-          >
-            {menu[key].title}
-          </NavLink>
-        ))}         
-      </Nav>
-    </Navbar.Collapse>
-  </Navbar>
+  <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+    <Container className="container">
+      <Navbar.Brand href="/">Kleinberg Family</Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto">
+        </Nav>
+        <Nav>
+          {Object.keys(menu).map(key => (
+            <NavLink
+              key={menu[key].link}
+              href={menu[key].link}
+            >
+              {menu[key].title}
+            </NavLink>
+          ))} 
+        </Nav>
+      </Navbar.Collapse>
+  </Container>
+</Navbar>
 )
 
 export default Header

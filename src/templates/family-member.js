@@ -1,9 +1,14 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { isAuthenticated, login } from "../utils/auth";
 import Layout from "../components/layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 const FamilyMemberTemplate = ({ data }) => {
+  if (!isAuthenticated()) {
+    login()
+    return <div className="container mt-5">Redirecting to login...</div>
+  }
 
   return (
     <Layout>

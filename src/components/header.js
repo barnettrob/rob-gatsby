@@ -1,34 +1,55 @@
 import React from "react";
+import { Router } from "@reach/router";
+import { Link } from "gatsby";
 import { Container, Nav, Navbar, NavLink } from 'react-bootstrap';
+import { isAuthenticated } from "../utils/auth";
 
-const menu = {
-  0: {
-    link: '/family',
-    title: 'Family Members',
+const FamilyMember = () => <div></div>
+const Logout = () => <div>Logout</div>
+
+const Header = () => {
+  if (!isAuthenticated()) {
+    return (
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        <Container className="container">
+          <Navbar.Brand href="/">Kleinberg Family</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+            </Nav>
+            <Nav>
+                <NavLink
+                  href="/login"
+                >
+                  Login
+                </NavLink>
+            </Nav>
+          </Navbar.Collapse>
+      </Container>
+    </Navbar>
+    )
   }
-}
 
-const Header = () => (
-  <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-    <Container className="container">
-      <Navbar.Brand href="/">Kleinberg Family</Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-      <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto">
-        </Nav>
-        <Nav>
-          {Object.keys(menu).map(key => (
-            <NavLink
-              key={menu[key].link}
-              href={menu[key].link}
-            >
-              {menu[key].title}
-            </NavLink>
-          ))} 
-        </Nav>
-      </Navbar.Collapse>
-  </Container>
-</Navbar>
-)
+  return (
+    <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+      <Container className="container">
+        <Navbar.Brand href="/">Kleinberg Family</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+          </Nav>
+          <Nav>
+        <Link to="/family/members/" className="mx-5 text-secondary">Family Members</Link>{" "}
+        <Link to="/logout" className="mx-2 text-secondary">Logout</Link>{" "}
+      </Nav>
+      <Router>
+        <FamilyMember path="/family/members" />
+        <Logout path="/logout" />
+      </Router>
+        </Navbar.Collapse>
+    </Container>
+  </Navbar>
+  )
+}
 
 export default Header

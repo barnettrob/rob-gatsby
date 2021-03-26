@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
+import { isAuthenticated, login } from "../utils/auth";
 import Layout from "../components/layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import PlaceholderSvg from '../images/placeholder.svg';
@@ -7,11 +8,16 @@ import Pagination from "../components/pagination";
 
 class SpaceListing extends React.Component {
   render() {
-    const urlPath = 'family'
+    const urlPath = 'family/members'
     const { data } = this.props
     const posts = data.allNodeFamilyMember.edges
     const { currentPage } = this.props.pageContext
     const numPages = this.props.pageContext.familyNumPages
+
+    if (!isAuthenticated()) {
+      login()
+      return <div className="container mt-5">Redirecting to login...</div>
+    }
 
     return (
       <Layout>

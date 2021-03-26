@@ -6,7 +6,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import PlaceholderSvg from '../images/placeholder.svg';
 import Pagination from "../components/pagination";
 
-class SpaceListing extends React.Component {
+class familyMemberListing extends React.Component {
   render() {
     const urlPath = 'family/members'
     const { data } = this.props
@@ -63,7 +63,7 @@ class SpaceListing extends React.Component {
   }
 }
 
-export default SpaceListing
+export default familyMemberListing
 
 export const pageQuery = graphql`
   query ($skip: Int!, $limit: Int!) {

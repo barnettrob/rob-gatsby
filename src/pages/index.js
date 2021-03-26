@@ -6,12 +6,12 @@ import Layout from "../components/layout";
 const User = ({ user }) => {
   if (!isAuthenticated()) {
   return <div className="container mt-5">
-    Welcome, {user.name ? user.name : "friend"}!
+    Login to see family information.
   </div>
   }
   else {
     return <div className="container mt-5">
-      Login to see family information.
+      Welcome, {user.name ? user.name : "friend"}!
     </div>
   }
 }

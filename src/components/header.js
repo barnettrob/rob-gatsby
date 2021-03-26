@@ -5,6 +5,7 @@ import { Container, Nav, Navbar, NavLink } from 'react-bootstrap';
 import { isAuthenticated } from "../utils/auth";
 
 const FamilyMember = () => <div></div>
+const FamilyTree = () => <div></div>
 const Logout = () => <div>Logout</div>
 
 const Header = () => {
@@ -39,11 +40,13 @@ const Header = () => {
           <Nav className="mr-auto">
           </Nav>
           <Nav>
-        <Link to="/family/members/" className="mx-5 text-secondary">Family Members</Link>{" "}
+        <Link to="/family/members/" className="mx-2 text-secondary">Family Members</Link>{" "}
+        <Link to="/family/tree" className="mx-5 text-secondary">Family Tree</Link>{" "}
         <Link to="/logout" className="mx-2 text-secondary">Logout</Link>{" "}
       </Nav>
       <Router>
         <FamilyMember path="/family/members" />
+        <FamilyTree path="/family/tree" />
         <Logout path="/logout" />
       </Router>
         </Navbar.Collapse>

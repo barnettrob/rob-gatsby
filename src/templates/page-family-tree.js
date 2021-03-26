@@ -17,11 +17,8 @@ const PageNodeTemplate = ({ data }) => {
 };
 
 export const query = graphql`
-  query ($alias: String!) {
-    page: nodePage(
-      path: {alias: {eq: $alias, ne: "/family/tree"}}
-      status: {eq: true}
-    ) {
+  query {
+    page: nodePage(path: {alias: {eq: "/family/tree"}}, status: {eq: true}) {
       title
       body {
         processed

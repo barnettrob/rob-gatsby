@@ -89,15 +89,15 @@ exports.createPages = async ({ actions, graphql }) => {
       })
     });
     // Create pages for family tree.
-    // result.data.family_tree.edges.forEach(({ node }) => {
-    //   createPage({
-    //     path: node.path.alias,
-    //     component: familyTreeTemplate,
-    //     context: {
-    //       alias: node.path.alias != null ? node.path.alias : `/node/${node.drupal_internal__nid}`,
-    //     }
-    //   })
-    // });       
+    result.data.family_tree.edges.forEach(({ node }) => {
+      createPage({
+        path: node.path.alias,
+        component: familyTreeTemplate,
+        context: {
+          alias: node.path.alias != null ? node.path.alias : `/node/${node.drupal_internal__nid}`,
+        }
+      })
+    });       
     // Create pages for each family member page.
     result.data.family_member.edges.forEach(({ node }) => {
       createPage({

@@ -1,10 +1,18 @@
 import React from "react";
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby";
 import { login, isAuthenticated } from "../utils/auth";
-// import { Link } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import Layout from "../components/layout";
 import { Tree, TreeNode } from 'react-organizational-chart';
 import styled from 'styled-components';
+
+// Use src/templates/page-family-tree.js to control family tree.
+const StyledNode = styled.div`
+padding: 5px;
+border-radius: 8px;
+display: block;
+border: 1px solid red;
+`;
 
 const Family = ({ data }) => {
   if (!isAuthenticated()) {
@@ -13,12 +21,7 @@ const Family = ({ data }) => {
   }
   
   console.log("all_family", data)
-  const StyledNode = styled.div`
-    padding: 5px;
-    border-radius: 8px;
-    display: inline-block;
-    border: 1px solid red;
-  `;
+
   const posts = data.all_family.edges
 
   return (
@@ -32,15 +35,27 @@ const Family = ({ data }) => {
       >
         {posts.filter(person => person.node.relationships.field_descendent_parent === null).map(({ node }) => (
           <TreeNode key={node.drupal_id}
-            label={<StyledNode>{node.title}</StyledNode>}
+            label={<StyledNode>
+                {node.relationships.field_member_picture.localFile !== null &&
+                    <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
+                    {node.title}
+              </StyledNode>}
           >
             {posts.filter(child => child.node.relationships.field_descendent_parent !== null && child.node.relationships.field_descendent_parent.title === node.title).map(({ node }) => (
               <TreeNode key={node.drupal_id}
-                label={<StyledNode>{node.title}</StyledNode>}
+                label={<StyledNode>
+                  {node.relationships.field_member_picture.localFile !== null &&
+                    <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
+                  {node.title}
+                  </StyledNode>}
                 >
                   {posts.filter(child => child.node.relationships.field_descendent_parent !== null && child.node.relationships.field_descendent_parent.title === node.title).map(({ node }) => (
                     <TreeNode key={node.drupal_id}
-                      label={<StyledNode>{node.title}</StyledNode>}
+                      label={<StyledNode>
+                        {node.relationships.field_member_picture.localFile !== null &&
+                          <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
+                          {node.title}
+                      </StyledNode>}
                     >
                     </TreeNode>
                   ))}
@@ -64,8 +79,12 @@ export const query = graphql`
           relationships {
             field_member_picture {
               localFile {
-                childrenImageSharp {
-                  gatsbyImageData(height: 50, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
+                childImageSharp {
+                  gatsbyImageData(
+                    height: 100
+                    placeholder: BLURRED
+                    formats: [AUTO, WEBP, AVIF]
+                  )
                 }
               }
             }

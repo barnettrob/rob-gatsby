@@ -37,12 +37,12 @@ class familyTree extends React.Component {
     display: inline-block;
     border: 1px solid #3aa88e;
     position: relative;
+    width: 110px;
     `;
 
     const StyledInnerNode = styled.div`
     margin: 0 auto;
     postion: relative;
-    width: 110px;
     `;
 
     if (!isAuthenticated()) {
@@ -71,9 +71,6 @@ class familyTree extends React.Component {
                         <MemberDetailModal 
                           show={this.state.show}
                           details={this.state.activeItem}
-                          title={node.title}
-                          picture={node.relationships.field_member_picture.localFile}
-                          about={node.drupal_id}
                           onHide={() => this.handleClose(node)}
                         />
                       </StyledInnerNode>
@@ -83,9 +80,16 @@ class familyTree extends React.Component {
                 <TreeNode key={node.drupal_id}
                   label={<StyledNode>
                           <StyledInnerNode>
-                            {node.relationships.field_member_picture.localFile !== null &&
-                              <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
-                            {node.title}
+                            <Link to="#" onClick={() => this.handleShow(node)}>
+                              {node.relationships.field_member_picture.localFile !== null &&
+                                <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
+                              {node.title}
+                            </Link>
+                            <MemberDetailModal 
+                              show={this.state.show}
+                              details={this.state.activeItem}
+                              onHide={() => this.handleClose(node)}
+                            />                            
                       </StyledInnerNode>
                     </StyledNode>}
                   >
@@ -93,12 +97,38 @@ class familyTree extends React.Component {
                       <TreeNode key={node.drupal_id}
                         label={<StyledNode>
                                 <StyledInnerNode>
-                                  {node.relationships.field_member_picture.localFile !== null &&
-                                    <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
-                                    {node.title}
+                                  <Link to="#" onClick={() => this.handleShow(node)}>
+                                    {node.relationships.field_member_picture.localFile !== null &&
+                                      <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
+                                      {node.title}
+                                  </Link>
+                                  <MemberDetailModal 
+                                    show={this.state.show}
+                                    details={this.state.activeItem}
+                                    onHide={() => this.handleClose(node)}
+                                  />                                    
                             </StyledInnerNode>
                         </StyledNode>}
                       >
+                    {posts.filter(child => child.node.relationships.field_descendent_parent !== null && child.node.relationships.field_descendent_parent.title === node.title).map(({ node }) => (
+                        <TreeNode key={node.drupal_id}
+                          label={<StyledNode>
+                                  <StyledInnerNode>
+                                    <Link to="#" onClick={() => this.handleShow(node)}>
+                                      {node.relationships.field_member_picture.localFile !== null &&
+                                        <GatsbyImage image={getImage(node.relationships.field_member_picture.localFile)} alt={node.title} />}
+                                        {node.title}
+                                    </Link>
+                                    <MemberDetailModal 
+                                      show={this.state.show}
+                                      details={this.state.activeItem}
+                                      onHide={() => this.handleClose(node)}
+                                    />                                    
+                              </StyledInnerNode>
+                          </StyledNode>}
+                        >
+                        </TreeNode>
+                      ))}                        
                       </TreeNode>
                     ))}
                   </TreeNode>
@@ -126,7 +156,7 @@ export const pageQuery = graphql`
               localFile {
                 childImageSharp {
                   gatsbyImageData(
-                    height: 100
+                    height: 500
                     placeholder: BLURRED
                     formats: [AUTO, WEBP, AVIF]
                   )
@@ -136,6 +166,24 @@ export const pageQuery = graphql`
             field_descendent_parent {
               title
             }
+          }
+          field_partner
+          field_phone_number
+          body {
+            processed
+          }
+          field_born {
+            administrative_area
+            country_code
+            locality
+          }
+          field_current_address {
+            address_line1
+            address_line2
+            administrative_area
+            country_code
+            postal_code
+            locality
           }
         }
       }

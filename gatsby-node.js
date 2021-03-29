@@ -110,7 +110,7 @@ exports.createPages = async ({ actions, graphql }) => {
     });
     // Create list pages for family members.
     const familyPosts = result.data.family_list.edges
-    const familyPostsPerPage = 3
+    const familyPostsPerPage = 2000
     const familyNumPages = Math.ceil(familyPosts.length / familyPostsPerPage)
     Array.from({ length: familyNumPages }).forEach((_, i) => {
       createPage({

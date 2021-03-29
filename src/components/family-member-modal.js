@@ -5,7 +5,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image";
 class FamilyMemberModal extends React.Component {
   render() {
     const member = this.props;
-    console.log('member', member.details.field_born)
+
     return (
         <Modal
           {...member}
@@ -20,6 +20,8 @@ class FamilyMemberModal extends React.Component {
             <div className="picture">
               {member.details !== ""
                 ?
+                member.details.relationships.field_member_picture !== null &&
+                member.details.relationships.field_member_picture.localFile !== null &&
                 <GatsbyImage image={getImage(member.details.relationships.field_member_picture.localFile)} alt={member.details.title} />
                 :
                 ''}

@@ -16,7 +16,9 @@ const FamilyMemberTemplate = ({ data }) => {
         {data.family.title}
       </h1>
       <div className="container">
-        <GatsbyImage image={getImage(data.family.relationships.field_member_picture.localFile)} alt={data.family.title} />
+        {data.family.relationships.field_member_picture !== null &&
+          data.family.relationships.field_member_picture.localFile !== null &&
+        <GatsbyImage image={getImage(data.family.relationships.field_member_picture.localFile)} alt={data.family.title} />}
         {data.family.body !== null ?
         <div dangerouslySetInnerHTML={{ __html: data.family.body.processed}} />
         :
@@ -50,6 +52,27 @@ export const query = graphql`
             }
           }
         }
+        field_descendent_parent {
+          title
+        }
+      }
+      field_partner
+      field_phone_number
+      body {
+        processed
+      }
+      field_born {
+        administrative_area
+        country_code
+        locality
+      }
+      field_current_address {
+        address_line1
+        address_line2
+        administrative_area
+        country_code
+        postal_code
+        locality
       }
     }
   }

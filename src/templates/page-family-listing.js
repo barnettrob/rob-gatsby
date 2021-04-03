@@ -14,7 +14,7 @@ const FamilyListingTemplate = () => {
         searchClient={searchClient}
         indexName={process.env.GATSBY_ALGOLIA_INDEX_NAME}
       >
-        <div className="container d-flex mt-5">
+        <div className="family-listing container d-flex mt-5">
           <div className="col-md-3 text-sm-left">
             <SearchBox 
               translations={{
@@ -54,15 +54,11 @@ const FamilyListingTemplate = () => {
                   }
                   return item
                 })
-                // items.map(item => ({
-                //   ...item,
-                //   label: item.label.toUpperCase(),
-                // }))
               }
             />
           </div>
           <div className="col-md-9 pr-lg-5">
-            <h6 className="ml-4">Family Members</h6>
+            <h6 className="results-title ml-4">Family Members</h6>
             <Hits hitComponent={Results} />
             <Pagination />
           </div>

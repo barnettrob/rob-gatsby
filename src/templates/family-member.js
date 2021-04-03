@@ -3,11 +3,28 @@ import { graphql, Link } from 'gatsby';
 import { isAuthenticated, login } from "../utils/auth";
 import Layout from "../components/layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import { CountryCodes } from "../utilities";
 
 const FamilyMemberTemplate = ({ data }) => {
   if (!isAuthenticated()) {
     login()
     return <div className="container mt-5">Redirecting to login...</div>
+  }
+
+  let currentCountry = '';
+  if (data.family.field_current_address !== null && 
+      data.family.field_current_address.country_code !== null && 
+        data.family.field_current_address.country_code !== '') {
+          const countryCode = data.family.field_current_address.country_code;
+          currentCountry = CountryCodes[countryCode];
+  }
+
+  let currentBornCountry = '';
+  if (data.family.field_born !== null && 
+      data.family.field_born.country_code !== null && 
+        data.family.field_born.country_code !== '') {
+          const countryBornCode = data.family.field_born.country_code;
+          currentBornCountry = CountryCodes[countryBornCode];
   }
 
   return (
@@ -48,19 +65,21 @@ const FamilyMemberTemplate = ({ data }) => {
                   <span className="mr-2">{data.family.field_born.locality},</span>}
                 {data.family.field_born.administrative_area !== null && 
                   <span className="mr-2">{data.family.field_born.administrative_area},</span>}
-                {data.family.field_born.country_code !== null && 
-                  <span className="mr-2">{data.family.field_born.country_code}</span>}
+                {currentBornCountry !== '' && 
+                  <span className="mr-2">{currentBornCountry}</span>}
               </div>}  
               {data.family !== "" && data.family.field_current_address !== null
               &&
               <div className="mt-3">
                 <div className="font-weight-bold mr-2">Current Address:</div>
                 {data.family.field_current_address.locality !== null && 
+                  data.family.field_current_address.locality !== '' &&
                   <span className="mr-2">{data.family.field_current_address.locality},</span>}
                 {data.family.field_current_address.administrative_area !== null && 
-                  <span className="mr-2">{data.family.field_current_address.administrative_area}</span>}
-                {data.family.field_current_address.country_code !== null && 
-                  <span className="mr-2">{data.family.field_current_address.country_code}</span>}
+                  data.family.field_current_address.administrative_area !== '' &&
+                  <span className="mr-2">{data.family.field_current_address.administrative_area},</span>}
+                {currentCountry !== '' &&
+                  <span className="mr-2">{currentCountry}</span>}
               </div>}                    
           </div>
       </div>

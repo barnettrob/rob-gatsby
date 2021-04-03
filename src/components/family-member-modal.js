@@ -1,10 +1,11 @@
 import React from "react";
 import { Modal } from 'react-bootstrap';
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import { CountryCodes } from "../utilities";
 
 class FamilyMemberModal extends React.Component {
   render() {
-    const member = this.props;
+    const member = this.props; 
 
     return (
         <Modal
@@ -45,22 +46,28 @@ class FamilyMemberModal extends React.Component {
                   <div className="mt-3">
                     <div className="font-weight-bold mr-2">Born:</div>
                     {member.details.field_born.locality !== null && 
+                     member.details.field_born.locality !== '' &&
                       <span className="mr-2">{member.details.field_born.locality},</span>}
                     {member.details.field_born.administrative_area !== null && 
+                     member.details.field_born.administrative_area !== '' &&
                       <span className="mr-2">{member.details.field_born.administrative_area},</span>}
                     {member.details.field_born.country_code !== null && 
-                      <span className="mr-2">{member.details.field_born.country_code}</span>}
+                     member.details.field_born.country_code !== '' &&
+                      <span className="mr-2">{CountryCodes[member.details.field_born.country_code]}</span>}
                   </div>}  
                   {member.details !== "" && member.details.field_current_address !== null
                   &&
                   <div className="mt-3">
                     <div className="font-weight-bold mr-2">Current Address:</div>
                     {member.details.field_current_address.locality !== null && 
+                     member.details.field_current_address.locality !== '' &&
                       <span className="mr-2">{member.details.field_current_address.locality},</span>}
                     {member.details.field_current_address.administrative_area !== null && 
-                      <span className="mr-2">{member.details.field_current_address.administrative_area}</span>}
+                     member.details.field_current_address.administrative_area !== '' &&
+                      <span className="mr-2">{member.details.field_current_address.administrative_area},</span>}
                     {member.details.field_current_address.country_code !== null && 
-                      <span className="mr-2">{member.details.field_current_address.country_code}</span>}
+                     member.details.field_current_address.country_code !== '' &&
+                      <span className="mr-2">{CountryCodes[member.details.field_current_address.country_code]}</span>}
                   </div>}                    
               </div>
           </Modal.Body>

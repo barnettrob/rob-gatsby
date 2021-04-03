@@ -11,6 +11,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
   const pageTemplate = path.resolve(`src/templates/page-drupal.js`)
   const familyTreeTemplate = path.resolve(`src/templates/page-family-tree.js`)
+  const familyListingTemplate = path.resolve(`src/templates/page-family-listing.js`)
   const familyMemberTemplate = path.resolve(`src/templates/family-member.js`)
   const familyMemberListingTemplate = path.resolve(`src/templates/family-member-listing.js`)
 
@@ -19,7 +20,7 @@ exports.createPages = async ({ actions, graphql }) => {
   return graphql(`
     {
       page: allNodePage(
-        filter: {status: {eq: true}, path: {alias: {ne: "/family/tree"}}}
+        filter: {status: {eq: true}, path: {alias: {nin: ["/family/tree", "/family/listing"]}}}
       ) {
         edges {
           node {
@@ -47,6 +48,22 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
+      family_listing: allNodePage(
+        filter: {status: {eq: true}, path: {alias: {eq: "/family/listing"}}}
+      ) {
+        edges {
+          node {
+            body {
+              processed
+            }
+            title
+            path {
+              alias
+            }
+            drupal_internal__nid
+          }
+        }
+      }      
       family_member: allNodeFamilyMember(filter: {status: {eq: true}}) {
         edges {
           node {
@@ -97,7 +114,17 @@ exports.createPages = async ({ actions, graphql }) => {
           alias: node.path.alias != null ? node.path.alias : `/node/${node.drupal_internal__nid}`,
         }
       })
-    });       
+    });
+    // Create pages for family listing.
+    result.data.family_listing.edges.forEach(({ node }) => {
+      createPage({
+        path: node.path.alias,
+        component: familyListingTemplate,
+        context: {
+          alias: node.path.alias != null ? node.path.alias : `/node/${node.drupal_internal__nid}`,
+        }
+      })
+    });          
     // Create pages for each family member page.
     result.data.family_member.edges.forEach(({ node }) => {
       createPage({

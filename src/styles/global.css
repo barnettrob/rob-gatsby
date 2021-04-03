@@ -1,0 +1,132 @@
+@media (max-width: 991px) {
+  .navbar-nav  a {
+    margin-left: 0 !important;
+    border-top: 1px solid #ddd;
+    width: 100%;
+    padding: 15px 0;
+    margin-top: 10px;
+  }
+}
+
+/** Algolia Results **/
+ul.ais-Hits-list {
+  list-style-type: none;
+}
+
+/** Algolia Facets **/
+ul.ais-RefinementList-list {
+  list-style-type: none;
+  margin-left: -40px;
+}
+
+span.ais-RefinementList-labelText {
+  margin-left: 10px;
+}
+
+span.ais-RefinementList-count {
+  background-color: #ddd;
+  color: #757175;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+/** Algolia Pagination **/
+.ais-Pagination ul.ais-Pagination-list {
+  text-align: center;
+  list-style: none;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item {
+  display: inline-block;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item a.ais-Pagination-link {
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1px solid #ddd;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item a[aria-label="First"]:after {
+  padding-left: 4px;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item a[aria-label="Previous"]:after {
+  padding-left: 4px;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item a[aria-label="Next"]:before {
+  padding-right: 4px;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item a[aria-label="Last"]:before {
+  padding-right: 4px;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-pagination--item__active {
+  font-weight: bold;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item--disabled {
+  display: none;
+}
+
+.ais-Pagination ul.ais-Pagination-list li.ais-Pagination-item--selected a.ais-Pagination-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #4D89B1;
+  border-color: #4D89B1;
+}
+
+/*** Search box styling ***/
+.ais-SearchBox {
+  position: relative;
+  background-color: #ebeff2;
+  border-radius: .2rem;
+}
+.ais-SearchBox-input {
+  width: 100%;
+  padding: 10px 0 10px 40px;
+  color: #102d40;
+  border: none;
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #102d40;
+  background-color: #ebeff2;
+  background-clip: padding-box;
+  border: 1px solid #ebeff2;
+  border-radius: .2rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.ais-SearchBox-input:focus {
+  color: #102d40;
+  background-color: #ebeff2;
+  border-color: #a5c4d8;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(77,137,177,.25);
+}
+.ais-SearchBos form:focus {
+  outline: 1px;
+  outline-color: rgb(0, 95, 204);
+}
+.ais-SearchBox-submit {
+  border: none;
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  background-color: transparent;
+}
+.ais-SearchBox-submit:focus {
+  outline: none;
+}
+.ais-SearchBox-submitIcon {
+  width: 15px;
+  height: 15px;
+  fill: #495359;
+}
+.ais-SearchBox-reset {
+  display: none;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import { isAuthenticated, login } from "../utils/auth";
 import Layout from "../components/layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
@@ -19,12 +19,52 @@ const FamilyMemberTemplate = ({ data }) => {
         {data.family.relationships.field_member_picture !== null &&
           data.family.relationships.field_member_picture.localFile !== null &&
         <GatsbyImage image={getImage(data.family.relationships.field_member_picture.localFile)} alt={data.family.title} />}
-        {data.family.body !== null ?
-        <div dangerouslySetInnerHTML={{ __html: data.family.body.processed}} />
-        :
-        ''
-        }
+                {data.family.body !== null &&
+        <div className="mt-2 mb-2">
+          <div className="font-weight-bold">About:</div>
+          <div dangerouslySetInnerHTML={{ __html: data.family.body.processed}} />
+        </div>}
+        {data.family.relationships.field_descendent_parent !== null && data.family.relationships.field_descendent_parent.title !== null &&
+          <div className="mt-2 mb-2">
+            <div className="font-weight-bold">Parent:</div>
+            <Link
+              to={data.family.relationships.field_descendent_parent.path.alias}
+            >
+              {data.family.relationships.field_descendent_parent.title} 
+            </Link> 
+          </div>}
+          {data.family.field_partner !== null
+            &&
+            <div className="mt-2 mb-2">
+              <div className="font-weight-bold mr-2">Partner:</div>
+              {data.family.field_partner}
+            </div>}
+          <div className="place">
+            {data.family !== "" && data.family.field_born !== null
+              &&
+              <div className="mt-3 flex-grow-2">
+                <div className="font-weight-bold mr-2">Born:</div>
+                {data.family.field_born.locality !== null && 
+                  <span className="mr-2">{data.family.field_born.locality},</span>}
+                {data.family.field_born.administrative_area !== null && 
+                  <span className="mr-2">{data.family.field_born.administrative_area},</span>}
+                {data.family.field_born.country_code !== null && 
+                  <span className="mr-2">{data.family.field_born.country_code}</span>}
+              </div>}  
+              {data.family !== "" && data.family.field_current_address !== null
+              &&
+              <div className="mt-3">
+                <div className="font-weight-bold mr-2">Current Address:</div>
+                {data.family.field_current_address.locality !== null && 
+                  <span className="mr-2">{data.family.field_current_address.locality},</span>}
+                {data.family.field_current_address.administrative_area !== null && 
+                  <span className="mr-2">{data.family.field_current_address.administrative_area}</span>}
+                {data.family.field_current_address.country_code !== null && 
+                  <span className="mr-2">{data.family.field_current_address.country_code}</span>}
+              </div>}                    
+          </div>
       </div>
+      
     </Layout>
   )
 };
@@ -54,6 +94,9 @@ export const query = graphql`
         }
         field_descendent_parent {
           title
+          path {
+            alias
+          }
         }
       }
       field_partner

@@ -51,7 +51,7 @@ class familyTree extends React.Component {
 
     return (
     <Layout>
-      <div className="container mt-5">
+      <div className="mt-5">
         <Tree 
           label={<div>Kleinberg Family Tree</div>}
           lineWidth={'2px'}
@@ -169,7 +169,9 @@ export default familyTree
 
 export const pageQuery = graphql`
   query {
-    all_family: allNodeFamilyMember {
+    all_family: allNodeFamilyMember(
+      sort: {fields: [relationships___field_descendent_parent___field_birthday, field_birthday], order: [DESC, ASC]}
+    ) {
       edges {
         node {
           title
@@ -211,6 +213,7 @@ export const pageQuery = graphql`
             postal_code
             locality
           }
+          field_birthday
         }
       }
     }

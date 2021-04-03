@@ -13,7 +13,7 @@ class familyMemberListing extends React.Component {
       checkboxesObj: {},
     };
 
-    this.handleCheckboxesChange = this.handleCheckboxesChange.bind(this);
+    this.handleCheckboxesChange = this.handleCheckboxesChange.bind(this);    
   }
 
   handleCheckboxesChange(i) {
@@ -120,14 +120,10 @@ class familyMemberListing extends React.Component {
                     {node.title}
                   </Link>
                 </h4>
-                <p className="mb-1 text-muted small">
-                  {
-                    node.body !== null ? 
-                      node.body.summary !== "" ? node.body.summary : node.body.processed.replace( /(<([^>]+)>)/ig, '').substring(0, 200)
-                    :
-                    ''
-                  }
-                </p>
+                {node.relationships.field_descendent_parent !== null && node.relationships.field_descendent_parent.title !== null &&
+                <div className="mb-1 text-muted small">
+                  Parent: {node.relationships.field_descendent_parent.title}
+                </div>}
                 {node.relationships.field_original_descendent !== null &&
                 <div className="font-italic font-weight-light small text-muted">
                   Original Descendent: {node.relationships.field_original_descendent.title}

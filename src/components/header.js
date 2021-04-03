@@ -40,12 +40,12 @@ const Header = () => {
           <Nav className="mr-auto">
           </Nav>
           <Nav>
-        <Link to="/family/members/" className="mx-2 text-secondary">Family Members</Link>{" "}
+        <Link to="/family/listing" className="mx-2 text-secondary">Family Members</Link>{" "}
         <Link to="/family/tree" className="mx-5 text-secondary">Family Tree</Link>{" "}
         <Link to="/logout" className="mx-2 text-secondary">Logout</Link>{" "}
       </Nav>
       <Router>
-        <FamilyMember path="/family/members" />
+        <FamilyMember path="/family/listing" />
         <FamilyTree path="/family/tree" />
         <Logout path="/logout" />
       </Router>

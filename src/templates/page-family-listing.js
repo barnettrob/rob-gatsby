@@ -1,5 +1,6 @@
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits, RefinementList, Pagination } from 'react-instantsearch-dom';
+import { login, isAuthenticated } from "../utils/auth";
 import Results from "../components/search/results";
 import React from 'react';
 import Layout from "../components/layout";
@@ -8,6 +9,12 @@ const FamilyListingTemplate = () => {
   const appId = process.env.GATSBY_ALGOLIA_APP_ID;
   const searchKey = process.env.GATSBY_ALGOLIA_SEARCH_KEY;
   const searchClient = algoliasearch(appId, searchKey);
+
+  if (!isAuthenticated()) {
+    login()
+    return <div className="container mt-5">Redirecting to login...</div>
+  }
+
   return (
     <Layout>
       <InstantSearch

@@ -10,5 +10,6 @@ export const CountryCodes = {
   'IL': 'Israel',
   'MX': 'Mexico',
   'PA': 'Panama',
+  'RU': 'Russia',
   'US': 'United States'
 };

@@ -61,9 +61,9 @@ const FamilyMemberTemplate = ({ data }) => {
               &&
               <div className="mt-3 flex-grow-2">
                 <div className="font-weight-bold mr-2">Born:</div>
-                {data.family.field_born.locality !== null && 
+                {data.family.field_born.locality !== null && data.family.field_born.locality !== "" && 
                   <span className="mr-2">{data.family.field_born.locality},</span>}
-                {data.family.field_born.administrative_area !== null && 
+                {data.family.field_born.administrative_area !== null && data.family.field_born.administrative_area !== "" && 
                   <span className="mr-2">{data.family.field_born.administrative_area},</span>}
                 {currentBornCountry !== '' && 
                   <span className="mr-2">{currentBornCountry}</span>}
